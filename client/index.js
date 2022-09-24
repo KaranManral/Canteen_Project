@@ -11,9 +11,13 @@ $("document").ready(()=>{
         $("#HomePage").css("display","block");
     }
     $("#explorer").click(()=>{
-        $(".front-img").slideUp(600);
-        $("#explorer").animate({top:"100%"},200);
-        $("#HomePage").fadeIn(1100);
+        $(".front-img").animate({top:"-200%"},1500,()=>{
+            $(".front-img").css("display","none");
+        });
+        $("#explorer").animate({top:"100%"},400,()=>{
+            $("#explorer").css("display","none");
+        });
+        $("#HomePage").fadeIn(1500);
     });
     $("#first-page").on("mouseenter",()=>{
         $(".front-img").fadeTo(0,0.5);
