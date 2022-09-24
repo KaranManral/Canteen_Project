@@ -10,11 +10,25 @@ $("document").ready(()=>{
         $("#first-page").css("display","none");
         $("#HomePage").css("display","block");
     }
-    $(".next").click(()=>{
+    $("#explorer").click(()=>{
         $(".front-img").slideUp(600);
-        $(".next").slideUp(100);
+        $("#explorer").animate({top:"100%"},200);
         $("#HomePage").fadeIn(1100);
     });
+    $("#first-page").on("mouseenter",()=>{
+        $(".front-img").fadeTo(0,0.5);
+        $("#explorer").animate({top:"64%"},500);
+        $("#first-page").stop();
+    }).on("mouseleave",()=>{
+        $(".front-img").fadeTo(0,1);
+        $("#explorer").animate({top:"100%"},500);
+        $("#first-page").stop();
+    })
+    $(".front-img").on("click",()=>{
+        $(".front-img").fadeTo(0,0.5);
+        $("#explorer").animate({top:"64%"},500);
+        $("#first-page").stop();
+    })
 });
 
 function setActiveLink(param) {

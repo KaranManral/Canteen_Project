@@ -13,33 +13,35 @@
   <script src="./js/popper.min.js"></script>
   <script src="./js/bootstrap.min.js"></script>
   <script>
-    if(sessionStorage.getItem("count")===null||parseInt(sessionStorage.getItem("count"))>100)
-      sessionStorage.setItem("count",1);
-    else
-    {
-      let temp = parseInt(sessionStorage.getItem("count"))+1;
-      sessionStorage.setItem("count",temp);
+    if (sessionStorage.getItem("count") === null || parseInt(sessionStorage.getItem("count")) > 100)
+      sessionStorage.setItem("count", 1);
+    else {
+      let temp = parseInt(sessionStorage.getItem("count")) + 1;
+      sessionStorage.setItem("count", temp);
     }
-    if(sessionStorage.getItem("visited")===null)
-      sessionStorage.setItem("visited",Date.now());
+    if (sessionStorage.getItem("visited") === null)
+      sessionStorage.setItem("visited", Date.now());
   </script>
 </head>
 
 <body>
   <div class="container-fluid" id="first-page">
     <img class="front-img" src="./assets/images/frontImg.jpg" alt="KMV Canteen">
-    <span class="next" style="font-size: 4rem !important; bottom: 7rem;">Explore</span>
-    <i class="bi bi-chevron-compact-down next"></i>
+    <button type="button" class="btn btn-outline-dark" id="explorer">Explore <i
+        class="bi bi-arrow-right-circle"></i></button>
   </div>
   <div class="home" id="HomePage">
 
-    <iframe src="./header.html" onload="this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()">
-    </iframe> 
-    
-    <iframe src="./HomePage.html" onload="this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()">
+    <iframe src="./header.html"
+      onload="this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()">
     </iframe>
-    
-    <iframe src="./footer.html" onload="this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()">
+
+    <iframe src="./HomePage.html"
+      onload="this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()">
+    </iframe>
+
+    <iframe src="./footer.html"
+      onload="this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()">
     </iframe>
   </div>
   <script src="./index.js"></script>
