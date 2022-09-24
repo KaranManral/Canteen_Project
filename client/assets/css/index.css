@@ -32,6 +32,9 @@ body {
 #HomePage{
     display: none;
 }
+#loginLink{
+	margin-right: 12vw;
+}
 .h2{
 	color: #6C88A4;
 }
