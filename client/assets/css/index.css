@@ -1,8 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
       'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
+      sans-serif; */
+	  font-family: 'Playfair Display', serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -28,6 +31,7 @@ body {
     transform: translateX(-50%);
 	cursor: pointer;
 	font-size: 2rem;
+	font-style: italic;
 }
 #HomePage{
     display: none;
@@ -35,7 +39,7 @@ body {
 #loginLink{
 	margin-right: 12vw;
 }
-.h2{
+.h1{
 	color: #6C88A4;
 }
 .card-deck{
@@ -43,6 +47,7 @@ body {
 	flex-wrap: nowrap;
 	overflow-x: hidden;
 	cursor: pointer;
+	padding: 2rem;
 }
 .card-deck:hover{
 	overflow-x: auto;
@@ -50,6 +55,20 @@ body {
 .card{
 	min-width: 300px;
 	max-width: 350px;
+}
+.card:hover{
+    transform: scale(1.05);
+ box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+ cursor: pointer;
+}
+.card-title{
+	font-style: bold;
+}
+.card-text{
+	font-style: italic;
+}
+.card-img-top{
+	width: 128px;
 }
 .card-deck::-webkit-scrollbar {
     width: 12px;
