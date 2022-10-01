@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require("body-parser");
 const path = require("path");
 const fs = require("fs");
 const app = express();
@@ -25,12 +26,23 @@ app.get('/', (req, res) => {
 
 app.get('/menu', (req, res) => {
   let temp = readData.replace("./HomePage.html", "./MenuPage.html");
+  // temp = temp.replace("./assets/css/mainpage.css", "./assets/css/menupage.css");
+  temp = temp.replace(`id="first-page"`, `id="first-page" style="display:none"`)
   res.send(temp);
 });
 
 app.get('/login', (req, res) => {
   let temp = readData.replace("./HomePage.html", "./LoginPage.html");
+  temp = temp.replace("./assets/css/mainpage.css", "./assets/css/login-register.css");
+  temp = temp.replace(`id="first-page"`, `id="first-page" style="display:none"`);
+  temp = temp.replace("./index.js", "./assets/js/validate.js");
   res.send(temp);
+});
+
+let urlencodedParser = bodyParser.urlencoded({ extended: false })
+
+app.post('/login', urlencodedParser, (req, res) => {
+  console.log(req.body)
 });
 
 app.get('/support', (req, res) => {
@@ -45,6 +57,9 @@ app.get('/feedback', (req, res) => {
 
 app.get('/register', (req, res) => {
   let temp = readData.replace("./HomePage.html", "./RegisterPage.html");
+  temp = temp.replace("./assets/css/mainpage.css", "./assets/css/login-register.css");
+  temp = temp.replace(`id="first-page"`, `id="first-page" style="display:none"`);
+  temp = temp.replace("./index.js", "./assets/js/validate.js");
   res.send(temp);
 });
 

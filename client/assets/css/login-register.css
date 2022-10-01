@@ -1,0 +1,36 @@
+#login-img{
+    max-width: 50vw;
+}
+#register-img{
+    max-width: 50vw;
+}
+#form,#regForm{
+    border: 1px solid gray;
+    border-radius: 12px;
+}
+input{
+    padding: 1rem;
+    width: 80%;
+    border-radius: 6px;
+}
+#fname,#lname,#rpwd,#rcpwd{
+    width: 37.6%;
+}
+.shaker{
+    animation: shake 300ms;
+}
+@keyframes shake {
+    25% {transform: translateX(4px);}
+    50% {transform: translateX(-4px);}
+    75% {transform: translateX(4px);}
+}
+@media only screen and (max-width:768px){
+    #login-img-container{
+        display: none;
+    }
+    #login-container{
+        min-width: 85vw;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
