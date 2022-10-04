@@ -1,0 +1,33 @@
+#feedback-form-wrapper{
+  width: 70vw;
+}
+.rating-input-wrapper{
+  max-width: 95vw;
+  width: fit-content;
+}
+#feedback-form-wrapper .rating-input-wrapper input[type="radio"] {
+  display: none;
+}
+#feedback-form-wrapper .rating-input-wrapper input[type="radio"] ~ span {
+  cursor: pointer;
+}
+#feedback-form-wrapper
+  .rating-input-wrapper
+  input[type="radio"]:checked
+  ~ span {
+  background-color: #4261dc;
+  color: #fff;
+}
+#feedback-form-wrapper .rating-labels > label {
+  font-size: 14px;
+  color: #777;
+
+}
+.rating-labels{
+  max-width: 350px;
+}
+@media only screen and (max-width: 768px){
+  #feedback-form-wrapper {
+      width: 95vw;
+    }
+}
