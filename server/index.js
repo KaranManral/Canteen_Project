@@ -51,7 +51,9 @@ app.get('/', (req, res) => {
 app.get('/menu', (req, res) => {
   let temp = cheerio.load(readData);
   temp("#bodyIF").attr("src", "./MenuPage.html");
-  temp('#first-page').css("display", "none")
+  temp('#first-page').css("display", "none");
+  temp("#mainCSS").attr("href", "./assets/css/menupage.css");
+  temp("#mainJS").attr("src", "./assets/js/addToCart.js");
   res.send(temp.html());
 });
 
@@ -62,9 +64,9 @@ app.get('/login', (req, res) => {
   else {
     let temp = cheerio.load(readData);
     temp("#bodyIF").attr("src", "./LoginPage.html");
-    temp('#first-page').css("display", "none")
-    temp("#mainCSS").attr("href", "./assets/css/login-register.css")
-    temp("#mainJS").attr("src", "./assets/js/validate.js")
+    temp('#first-page').css("display", "none");
+    temp("#mainCSS").attr("href", "./assets/css/login-register.css");
+    temp("#mainJS").attr("src", "./assets/js/validate.js");
     res.send(temp.html());
   }
 });
@@ -76,9 +78,9 @@ app.get('/register', (req, res) => {
   else {
     let temp = cheerio.load(readData);
     temp("#bodyIF").attr("src", "./RegisterPage.html");
-    temp('#first-page').css("display", "none")
-    temp("#mainCSS").attr("href", "./assets/css/login-register.css")
-    temp("#mainJS").attr("src", "./assets/js/validate.js")
+    temp('#first-page').css("display", "none");
+    temp("#mainCSS").attr("href", "./assets/css/login-register.css");
+    temp("#mainJS").attr("src", "./assets/js/validate.js");
     res.send(temp.html());
   }
 });
