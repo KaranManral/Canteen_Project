@@ -1,52 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KMV Canteen</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/bootstrap-icons.css" />
+    <link rel="stylesheet" href="./assets/css/index.css" />
+    <link rel="stylesheet" href="./assets/css/mainpage.css" />
+    <link rel="icon" href="./assets/images/restaurant.ico" />
+    <script src="./js/jquery.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script>
+      if (
+        sessionStorage.getItem("count") === null ||
+        parseInt(sessionStorage.getItem("count")) > 100
+      )
+        sessionStorage.setItem("count", 1);
+      else {
+        let temp = parseInt(sessionStorage.getItem("count")) + 1;
+        sessionStorage.setItem("count", temp);
+      }
+      if (sessionStorage.getItem("visited") === null)
+        sessionStorage.setItem("visited", Date.now());
+    </script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KMV Canteen</title>
-  <link rel="stylesheet" href="./css/bootstrap.min.css">
-  <link rel="stylesheet" href="./css/bootstrap-icons.css">
-  <link rel="stylesheet" href="./assets/css/index.css">
-  <link rel="stylesheet" href="./assets/css/mainpage.css">
-  <link rel="icon" href="./assets/images/restaurant.ico">
-  <script src="./js/jquery.min.js"></script>
-  <script src="./js/popper.min.js"></script>
-  <script src="./js/bootstrap.min.js"></script>
-  <script>
-    if (sessionStorage.getItem("count") === null || parseInt(sessionStorage.getItem("count")) > 100)
-      sessionStorage.setItem("count", 1);
-    else {
-      let temp = parseInt(sessionStorage.getItem("count")) + 1;
-      sessionStorage.setItem("count", temp);
-    }
-    if (sessionStorage.getItem("visited") === null)
-      sessionStorage.setItem("visited", Date.now());
-  </script>
-</head>
+  <body>
+    <div class="container-fluid" id="first-page">
+      <img
+        class="front-img"
+        src="./assets/images/frontImg.jpg"
+        alt="KMV Canteen"
+      />
+      <button type="button" class="btn btn-outline-dark" id="explorer">
+        Explore <i class="bi bi-arrow-right-circle"></i>
+      </button>
+    </div>
+    <div class="home" id="HomePage">
+      <iframe
+        src="./header.html"
+        onload="this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()"
+      >
+      </iframe>
 
-<body>
-  <div class="container-fluid" id="first-page">
-    <img class="front-img" src="./assets/images/frontImg.jpg" alt="KMV Canteen">
-    <button type="button" class="btn btn-outline-dark" id="explorer">Explore <i
-        class="bi bi-arrow-right-circle"></i></button>
-  </div>
-  <div class="home" id="HomePage">
+      <iframe
+        src="./HomePage.html"
+        onload="this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()"
+      >
+      </iframe>
 
-    <iframe src="./header.html"
-      onload="this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()">
-    </iframe>
-    
-    <iframe src="./HomePage.html"
-      onload="this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()">
-    </iframe>
-
-    <iframe src="./footer.html"
-      onload="this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()">
-    </iframe>
-  </div>
-  <script src="./index.js"></script>
-</body>
-
+      <iframe
+        src="./footer.html"
+        onload="this.before((this.contentDocument.body||this.contentDocument).children[0]);this.remove()"
+      >
+      </iframe>
+    </div>
+    <script src="./index.js"></script>
+  </body>
 </html>
