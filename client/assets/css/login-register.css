@@ -28,7 +28,7 @@ input{
     #login-img-container{
         display: none;
     }
-    #login-container{
+    #login-container,#load-container{
         min-width: 85vw;
         left: 50%;
         transform: translateX(-50%);
