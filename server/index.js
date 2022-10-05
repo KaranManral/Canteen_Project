@@ -49,12 +49,24 @@ app.get('/', (req, res) => {
 });
 
 app.get('/menu', (req, res) => {
-  let temp = cheerio.load(readData);
-  temp("#bodyIF").attr("src", "./MenuPage.html");
-  temp('#first-page').css("display", "none");
-  temp("#mainCSS").attr("href", "./assets/css/menupage.css");
-  temp("#mainJS").attr("src", "./assets/js/addToCart.js");
-  res.send(temp.html());
+  if (req.session.authenticated) {
+    let temporaryHead = cheerio.load(retHead);
+    let temp = cheerio.load(readData);
+    temp("#bodyIF").attr("src", "./MenuPage.html");
+    temp("#first-page").css("display", "none");
+    temp("#mainCSS").attr("href", "./assets/css/menupage.css");
+    temp("#mainJS").attr("src", "./assets/js/addToCart.js");
+    temporaryHead('body').find("#loginLink").replaceWith("<a class='nav-link' href='/cart' id='cart'><h2 style='color: gray;margin-right: 5vw;cursor: pointer;'><i class='bi bi-cart3'></i><span class='badge badge-primary' id='CartCount'> 0 </span></h2></a></li><li class='nav-item'><a class='nav-link' href='#'><div class='dropdown'><h2 id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style='color: gray;margin-right: 12vw;cursor: pointer;'> <i class='bi bi-person-circle'></i></h2><div class='dropdown-menu p-4' aria-labelledby='dropdownMenuButton' style='min-width: 375px;left: -175px;'><div class='card-body' style='border-bottom: 1px solid gray;'><div class='row'><div class='col'><h1 class='card-title'><i class='bi bi-person-circle'></i></h1></div><div class='col'><span id='spanName'>" + req.session.name + "</span><br><br><span id='spanEmail'>" + req.session.email + "</span></div></div></div><div class='card-footer text-center bg-transparent'><button type='button' class='btn btn-primary' onclick='window.location.href=`/logout`'>Logout</button></div></div></div></a>")
+    temp("#headIF").replaceWith(temporaryHead.html());
+    res.send(temp.html());
+  } else {
+    let temp = cheerio.load(readData);
+    temp("#bodyIF").attr("src", "./MenuPage.html");
+    temp('#first-page').css("display", "none");
+    temp("#mainCSS").attr("href", "./assets/css/menupage.css");
+    temp("#mainJS").attr("src", "./assets/js/addToCart.js");
+    res.send(temp.html());
+  }
 });
 
 app.get('/login', (req, res) => {
