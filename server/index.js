@@ -39,7 +39,7 @@ app.get('/', (req, res) => {
   if (req.session.authenticated) {
     let temporaryHead = cheerio.load(retHead);
     let temporaryData = cheerio.load(readData);
-    temporaryHead('body').find("#loginLink").replaceWith("<a class='nav-link' href='/cart' onclick='setActiveLink(this)' id='cart'><h2 style='color: gray;margin-right: 5vw;cursor: pointer;'><i class='bi bi-cart3'></i></h2></a></li><li class='nav-item'><a class='nav-link' href='#'><div class='dropdown'><h2 id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style='color: gray;margin-right: 12vw;cursor: pointer;'> <i class='bi bi-person-circle'></i></h2><div class='dropdown-menu p-4' aria-labelledby='dropdownMenuButton' style='min-width: 375px;left: -175px;'><div class='card-body' style='border-bottom: 1px solid gray;'><div class='row'><div class='col'><h1 class='card-title'><i class='bi bi-person-circle'></i></h1></div><div class='col'><span id='spanName'>" + req.session.name + "</span><br><br><span id='spanEmail'>" + req.session.email + "</span></div></div></div><div class='card-footer text-center bg-transparent'><button type='button' class='btn btn-primary' onclick='window.location.href=`/logout`'>Logout</button></div></div></div></a>")
+    temporaryHead('body').find("#loginLink").replaceWith("<a class='nav-link' href='/cart' id='cart'><h2 style='color: gray;margin-right: 5vw;cursor: pointer;'><i class='bi bi-cart3'></i><span class='badge badge-primary' id='CartCount'> 0 </span></h2></a></li><li class='nav-item'><a class='nav-link' href='#'><div class='dropdown'><h2 id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style='color: gray;margin-right: 12vw;cursor: pointer;'> <i class='bi bi-person-circle'></i></h2><div class='dropdown-menu p-4' aria-labelledby='dropdownMenuButton' style='min-width: 375px;left: -175px;'><div class='card-body' style='border-bottom: 1px solid gray;'><div class='row'><div class='col'><h1 class='card-title'><i class='bi bi-person-circle'></i></h1></div><div class='col'><span id='spanName'>" + req.session.name + "</span><br><br><span id='spanEmail'>" + req.session.email + "</span></div></div></div><div class='card-footer text-center bg-transparent'><button type='button' class='btn btn-primary' onclick='window.location.href=`/logout`'>Logout</button></div></div></div></a>")
     temporaryData("#headIF").replaceWith(temporaryHead.html());
     res.send(temporaryData.html());
   }
@@ -102,6 +102,7 @@ app.get('/logout', (req, res) => {
 });
 
 let urlencodedParser = bodyParser.urlencoded({ extended: false })
+let jsonencodeParser = bodyParser.json()
 
 app.post('/login', urlencodedParser, async (req, res) => {
   if (req.session.authenticated) {
@@ -240,8 +241,20 @@ app.post('/register', urlencodedParser, async (req, res) => {
 });
 
 app.get("/support", (req, res) => {
-  let temp = readData.replace("./HomePage.html", "./SupportPage.html");
-  res.send(temp);
+  if (req.session.authenticated) {
+    let temporaryHead = cheerio.load(retHead);
+    let temp = cheerio.load(readData);
+    temp("#bodyIF").attr("src", "./SupportPage.html");
+    temp("#first-page").css("display", "none");
+    temporaryHead('body').find("#loginLink").replaceWith("<a class='nav-link' href='/cart' id='cart'><h2 style='color: gray;margin-right: 5vw;cursor: pointer;'><i class='bi bi-cart3'></i><span class='badge badge-primary' id='CartCount'> 0 </span></h2></a></li><li class='nav-item'><a class='nav-link' href='#'><div class='dropdown'><h2 id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style='color: gray;margin-right: 12vw;cursor: pointer;'> <i class='bi bi-person-circle'></i></h2><div class='dropdown-menu p-4' aria-labelledby='dropdownMenuButton' style='min-width: 375px;left: -175px;'><div class='card-body' style='border-bottom: 1px solid gray;'><div class='row'><div class='col'><h1 class='card-title'><i class='bi bi-person-circle'></i></h1></div><div class='col'><span id='spanName'>" + req.session.name + "</span><br><br><span id='spanEmail'>" + req.session.email + "</span></div></div></div><div class='card-footer text-center bg-transparent'><button type='button' class='btn btn-primary' onclick='window.location.href=`/logout`'>Logout</button></div></div></div></a>")
+    temp("#headIF").replaceWith(temporaryHead.html());
+    res.send(temp.html());
+  } else {
+    let temp = cheerio.load(readData);
+    temp("#bodyIF").attr("src", "./SupportPage.html");
+    temp("#first-page").css("display", "none");
+    res.send(temp.html());
+  }
 });
 
 app.get("/feedback", (req, res) => {
@@ -251,20 +264,40 @@ app.get("/feedback", (req, res) => {
     temp("#bodyIF").attr("src", "./FeedbackPage.html");
     temp("#first-page").css("display", "none");
     temp("#mainCSS").attr("href", "./assets/css/feedback.css");
-    temporaryHead("body")
-      .find("#loginLink")
-      .replaceWith(
-        "<a class='nav-link' href='/cart' onclick='setActiveLink(this)' id='cart'><h2 style='color: gray;margin-right: 5vw;cursor: pointer;'><i class='bi bi-cart3'></i></h2></a></li><li class='nav-item'><a class='nav-link' href='#'><div class='dropdown'><h2 id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style='color: gray;margin-right: 12vw;cursor: pointer;'> <i class='bi bi-person-circle'></i></h2><div class='dropdown-menu p-4' aria-labelledby='dropdownMenuButton' style='min-width: 375px;left: -175px;'><div class='card-body' style='border-bottom: 1px solid gray;'><div class='row'><div class='col'><h1 class='card-title'><i class='bi bi-person-circle'></i></h1></div><div class='col'><span id='spanName'>" +
-          req.session.name +
-          "</span><br><br><span id='spanEmail'>" +
-          req.session.email +
-          "</span></div></div></div><div class='card-footer text-center bg-transparent'><button type='button' class='btn btn-primary' onclick='window.location.href=`/logout`'>Logout</button></div></div></div></a>"
-      );
+    temporaryHead('body').find("#loginLink").replaceWith("<a class='nav-link' href='/cart' id='cart'><h2 style='color: gray;margin-right: 5vw;cursor: pointer;'><i class='bi bi-cart3'></i><span class='badge badge-primary' id='CartCount'> 0 </span></h2></a></li><li class='nav-item'><a class='nav-link' href='#'><div class='dropdown'><h2 id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style='color: gray;margin-right: 12vw;cursor: pointer;'> <i class='bi bi-person-circle'></i></h2><div class='dropdown-menu p-4' aria-labelledby='dropdownMenuButton' style='min-width: 375px;left: -175px;'><div class='card-body' style='border-bottom: 1px solid gray;'><div class='row'><div class='col'><h1 class='card-title'><i class='bi bi-person-circle'></i></h1></div><div class='col'><span id='spanName'>" + req.session.name + "</span><br><br><span id='spanEmail'>" + req.session.email + "</span></div></div></div><div class='card-footer text-center bg-transparent'><button type='button' class='btn btn-primary' onclick='window.location.href=`/logout`'>Logout</button></div></div></div></a>")
     temp("#headIF").replaceWith(temporaryHead.html());
-    // temp("#mainJS").attr("src", "./assets/js/validate.js");
+    temp("#mainJS").attr("src", "./assets/js/feedback.js");
     res.send(temp.html());
   } else {
     res.redirect("/login");
+  }
+});
+
+app.post("/feedback", jsonencodeParser, async (req, res) => {
+  if (req.session.authenticated) {
+    try {
+      let feedback = req.body;
+      feedback["name"] = req.session.name;
+      feedback["email"] = req.session.email;
+      let submit = await mdb.submitFeedback(feedback);
+      if (submit === 1) {
+        res.status(200);
+        res.send({ "response": 200 });
+        res.end();
+      }
+      else {
+        res.status(200);
+        res.send({ "response": 500 });
+        res.end();
+      }
+    } catch (e) {
+      res.status(400);
+      res.send({ "response": 400 });
+      res.end();
+    }
+  }
+  else {
+    res.redirect("/");
   }
 });
 

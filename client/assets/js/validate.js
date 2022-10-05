@@ -43,7 +43,7 @@ window.addEventListener("load", () => {
                     url: "/login",
                     type: "post",
                     dataType: "json",
-                    async: 'false',
+                    async: true,
                     data: $("#form").serialize(),
                     success: function (data) {
                         if (data.response === 100)
@@ -187,7 +187,7 @@ window.addEventListener("load", () => {
                     url: "/register",
                     type: "post",
                     dataType: "json",
-                    async: 'false',
+                    async: true,
                     data: $("#regForm").serialize(),
                     success: function (data) {
                         if (data.response === 100) {

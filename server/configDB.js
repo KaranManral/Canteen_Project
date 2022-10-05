@@ -50,4 +50,30 @@ const checkUser = async (obj) => {
     return retData;
 }
 
-module.exports = { addUser, checkUser };
+const submitFeedback = async (obj) => {
+    let flag = null;
+    await Promise.resolve(client.connect().then(async (db) => {
+        const collection = client.db("CanteenProject").collection("feedback");
+        await Promise.resolve(collection.updateOne({ "email": obj["email"] },
+            {
+                $set: {
+                    "email": obj["email"],
+                    "name": obj["name"],
+                    "rating": obj["rating"],
+                    "feedHead": obj["feedHead"],
+                    "feedBody": obj["feedBody"]
+                }
+            }, { upsert: true }).then(() => {
+                client.close();
+                flag = 1;
+            }).catch((err) => {
+                client.close();
+                flag = 0;
+            }));
+    }).catch((err) => {
+        flag = null;
+    }));
+    return flag;
+}
+
+module.exports = { addUser, checkUser, submitFeedback };

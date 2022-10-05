@@ -1,37 +1,38 @@
 <div class="feedback-form-wrapper container my-5" id="feedback-form-wrapper">
-  <h4 id="feedback-form">Feedback Form</h4>
-  <form>
+  <h4 id="feedback-form">Feedback Form</h4><br><br>
+  <p class="lead text-danger" id="invalidFeedback"></p>
+  <form action="#" method="get" id="feedbackForm">
     <div class="form-group">
       <label for="exampleFormControlTextarea1"
-        >How likely you would like to recommand us to your friends?</label
+        >How you would like to rate us?</label
       >
       <div class="rating-input-wrapper d-flex flex-wrap mt-2">
         <label class="m-3"
-          ><input type="radio" name="rating" /><span
+          ><input type="radio" name="rating" value="1" /><span
             class="border rounded px-3 py-2"
             >1</span
           ></label
         >
         <label class="m-3"
-          ><input type="radio" name="rating" /><span
+          ><input type="radio" name="rating" value="2" /><span
             class="border rounded px-3 py-2"
             >2</span
           ></label
         >
         <label class="m-3"
-          ><input type="radio" name="rating" /><span
+          ><input type="radio" name="rating" value="3" /><span
             class="border rounded px-3 py-2"
             >3</span
           ></label
         >
         <label class="m-3"
-          ><input type="radio" name="rating" /><span
+          ><input type="radio" name="rating" value="4" /><span
             class="border rounded px-3 py-2"
             >4</span
           ></label
         >
         <label class="m-3"
-          ><input type="radio" name="rating" /><span
+          ><input type="radio" name="rating" value="5" /><span
             class="border rounded px-3 py-2"
             >5</span
           ></label
@@ -43,16 +44,34 @@
       </div>
     </div>
     <div class="form-group">
-      <label for="input-one">What made you leave us so early?</label>
-      <input type="text" class="form-control" id="input-one" placeholder="" />
+      <label for="input-one">How was our service?</label>
+      <input type="text" class="form-control" id="input-one" placeholder="" maxlength="100" required />
     </div>
     <div class="form-group">
-      <label for="input-two">Would you like to say something?</label>
-      <textarea class="form-control" id="input-two" rows="3"></textarea>
+      <label for="input-two">Would you like to describe your experience or suggest some changes?</label>
+      <textarea class="form-control" id="input-two" rows="3" maxlength="500"></textarea>
+    </div>
+    <div class="col-md 12 text-center">
+      <button type="submit" class="btn btn-primary">Submit</button>
     </div>
   </form>
-
-  <div class="col-md 12 text-center">
-    <button type="button" class="btn btn-primary">Submit</button>
-  </div>
+  <div class="col mx-4 my-auto" id="load-container" style="display: none;">
+    <div class="text-center" id="spin">
+        <div class="spinner-border" role="status" style="width: 4rem;height: 4rem;">
+            <span class="sr-only"></span>
+        </div>
+        <br><br>
+        <h4 class="text-primary">Submitting Feedback</h4>
+    </div>
+    <div class="text-center" id="tick" style="display: none;">
+        <h1 class="display-1"><i class="bi bi-patch-check-fill text-success"></i></h1>
+        <br><br>
+        <h4 class="text-primary">Feedback Submitted</h4>
+    </div>
+    <div class="text-center" id="cross" style="display: none;">
+        <h1 class="display-1"><i class="bi bi-patch-exclamation-fill text-danger"></i></i></h1>
+        <br><br>
+        <h4 class="text-primary">Failed to Submit</h4>
+    </div>
+</div>
 </div>
