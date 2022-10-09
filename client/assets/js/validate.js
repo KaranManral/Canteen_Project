@@ -55,7 +55,7 @@ window.addEventListener("load", () => {
                                 setTimeout(() => {
                                     window.location.href = "/";
                                 }, 1000);
-                            }, 2000);
+                            }, 1000);
                         if (data.response === 200)
                             setTimeout(() => {
                                 $("#spin").fadeOut(200);
@@ -65,7 +65,7 @@ window.addEventListener("load", () => {
                                 setTimeout(() => {
                                     window.location.href = "/";
                                 }, 1000);
-                            }, 2000);
+                            }, 1000);
                         if (data.response === 500) {
                             setTimeout(() => {
                                 $("#form-message").text("Failed to Login, Try Again.");
@@ -78,7 +78,7 @@ window.addEventListener("load", () => {
                                         $("#msg").text("");
                                     });
                                 }, 500);
-                            }, 2000);
+                            }, 1200);
                         }
                         if (data.response === 404) {
                             setTimeout(() => {
@@ -92,7 +92,7 @@ window.addEventListener("load", () => {
                                         $("#msg").text("");
                                     });
                                 }, 500);
-                            }, 2000);
+                            }, 1200);
                         }
                         if (data.response === 400) {
                             setTimeout(() => {
@@ -106,7 +106,7 @@ window.addEventListener("load", () => {
                                         $("#msg").text("");
                                     });
                                 }, 500);
-                            }, 2000);
+                            }, 1200);
                         }
                     },
                     error: function (jqXHR, textStatus, err) {
@@ -199,7 +199,7 @@ window.addEventListener("load", () => {
                                 setTimeout(() => {
                                     window.location.href = "/";
                                 }, 1000);
-                            }, 2000);
+                            }, 1000);
                         }
                         if (data.response === 200) {
                             setTimeout(() => {
@@ -207,8 +207,8 @@ window.addEventListener("load", () => {
                                 $("#tick").fadeIn(200);
                                 setTimeout(() => {
                                     window.location.href = "/login";
-                                }, 1500);
-                            }, 2000);
+                                }, 1000);
+                            }, 1000);
                         }
                         if (data.response === 500) {
                             setTimeout(() => {
@@ -216,7 +216,7 @@ window.addEventListener("load", () => {
                                 $("#regForm").trigger('reset');
                                 $("#load-container").slideUp(500);
                                 $("#login-container").slideDown(500);
-                            }, 2000);
+                            }, 1200);
                         }
                         if (data.response === 1) {
                             setTimeout(() => {
@@ -224,7 +224,7 @@ window.addEventListener("load", () => {
                                 $("#regForm").trigger('reset');
                                 $("#load-container").slideUp(500);
                                 $("#login-container").slideDown(500);
-                            }, 2000);
+                            }, 1200);
                         }
                         if (data.response === 400) {
                             setTimeout(() => {
@@ -232,7 +232,7 @@ window.addEventListener("load", () => {
                                 $("#regForm").trigger('reset');
                                 $("#load-container").slideUp(500);
                                 $("#login-container").slideDown(500);
-                            }, 2000);
+                            }, 1200);
                         }
                     },
                     error: function (jqXHR, textStatus, err) {

@@ -12,8 +12,7 @@
     "express-session": "^1.17.3",
     "fs": "^0.0.1-security",
     "mongodb": "^4.10.0",
-    "nodemon": "^2.0.20",
-    "uuid": "^9.0.0"
+    "razorpay": "^2.8.3"
   },
   "scripts": {
     "start": "nodemon server/index.js",
@@ -33,5 +32,8 @@
   "bugs": {
     "url": "https://github.com/KaranManral/Canteen_Project/issues"
   },
-  "homepage": "https://github.com/KaranManral/Canteen_Project#readme"
+  "homepage": "https://github.com/KaranManral/Canteen_Project#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
 }
