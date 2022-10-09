@@ -6,6 +6,11 @@ const app = express();
 const mdb = require("./configDB");
 const session = require("express-session");
 const cheerio = require("cheerio");
+const Razorpay = require('razorpay');
+var instance = new Razorpay({
+  key_id: 'rzp_test_q9fdWD6XW6gjOQ',
+  key_secret: 'QGxuLXAlK7KpGXqKWb0Rp79U',
+});
 
 let readData = "", retHead = "";
 
@@ -390,10 +395,10 @@ app.get('/about', (req, res) => {
       .find("#loginLink")
       .replaceWith(
         "<a class='nav-link' href='/cart' id='cart'><h2 style='color: gray;margin-right: 5vw;cursor: pointer;'><i class='bi bi-cart3'></i><span class='badge badge-primary' id='CartCount'> 0 </span></h2></a></li><li class='nav-item'><a class='nav-link' href='#'><div class='dropdown'><h2 id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style='color: gray;margin-right: 12vw;cursor: pointer;'> <i class='bi bi-person-circle'></i></h2><div class='dropdown-menu p-4' aria-labelledby='dropdownMenuButton' style='min-width: 375px;left: -175px;'><div class='card-body' style='border-bottom: 1px solid gray;'><div class='row'><div class='col'><h1 class='card-title'><i class='bi bi-person-circle'></i></h1></div><div class='col'><span id='spanName'>" +
-          req.session.name +
-          "</span><br><br><span id='spanEmail'>" +
-          req.session.email +
-          "</span></div></div></div><div class='card-footer text-center bg-transparent'><button type='button' class='btn btn-primary' onclick='window.location.href=`/logout`'>Logout</button></div></div></div></a>"
+        req.session.name +
+        "</span><br><br><span id='spanEmail'>" +
+        req.session.email +
+        "</span></div></div></div><div class='card-footer text-center bg-transparent'><button type='button' class='btn btn-primary' onclick='window.location.href=`/logout`'>Logout</button></div></div></div></a>"
       );
     temp("#headIF").replaceWith(temporaryHead.html());
     res.send(temp.html());
@@ -412,7 +417,7 @@ app.get('/cart', async (req, res) => {
     let temporaryHead = cheerio.load(retHead);
     let temp = cheerio.load(readData);
     temp("#bodyIF").replaceWith(`
-    <div class="container py-5">
+    <div class="container py-5" id="pageBody">
     <div class="row d-flex justify-content-center align-items-center">
       <div class="col-12">
         <div class="card card-registration card-registration-2" style="border-radius: 15px;">
@@ -442,7 +447,7 @@ app.get('/cart', async (req, res) => {
                   <div id="total"></div>
 
                   <button type="button" class="btn btn-dark btn-block btn-lg"
-                    data-mdb-ripple-color="dark" id="proceedPayment" onclick="window.location.href='/'">Pay</button>
+                    data-mdb-ripple-color="dark" id="proceedPayment" onclick="proceedPayment(this)">Pay</button>
 
                 </div>
               </div>
@@ -459,20 +464,23 @@ app.get('/cart', async (req, res) => {
     temporaryHead('body').find("#loginLink").replaceWith("<a class='nav-link' href='/cart' id='cart'><h2 style='color: gray;margin-right: 5vw;cursor: pointer;'><i class='bi bi-cart3'><span class='badge badge-warning' id='lblCartCount'> " + req.session.count + " </span></i></h2></a></li><li class='nav-item'><a class='nav-link' href='#'><div class='dropdown'><h2 id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style='color: gray;margin-right: 12vw;cursor: pointer;'> <i class='bi bi-person-circle'></i></h2><div class='dropdown-menu p-4' aria-labelledby='dropdownMenuButton' style='min-width: 375px;left: -175px;'><div class='card-body' style='border-bottom: 1px solid gray;'><div class='row'><div class='col'><h1 class='card-title'><i class='bi bi-person-circle'></i></h1></div><div class='col'><span id='spanName'>" + req.session.name + "</span><br><br><span id='spanEmail'>" + req.session.email + "</span></div></div></div><div class='card-footer text-center bg-transparent'><button type='button' class='btn btn-primary' onclick='window.location.href=`/logout`'>Logout</button></div></div></div></a>")
     temp("#headIF").replaceWith(temporaryHead.html());
     let items = await mdb.getItems();
-    let grandTotal = 0;
-    for (let i = 0; i < req.session.cart.length; i++) {
-      let image = "", price = 0, name = "", quantity = "", count = 0, pID = "";
-      for (let j = 0; j < items.data.length; j++) {
-        if (items.data[j]._id == req.session.cart[i].pid) {
-          image = items.data[j].img;
-          price = parseInt(items.data[j].price);
-          name = items.data[j].name;
-          quantity = items.data[j].quant;
-          pID = items.data[j]._id;
+    if (items.data == null)
+      res.redirect("/login");
+    else {
+      let grandTotal = 0;
+      for (let i = 0; i < req.session.cart.length; i++) {
+        let image = "", price = 0, name = "", quantity = "", count = 0, pID = "";
+        for (let j = 0; j < items.data.length; j++) {
+          if (items.data[j]._id == req.session.cart[i].pid) {
+            image = items.data[j].img;
+            price = parseInt(items.data[j].price);
+            name = items.data[j].name;
+            quantity = items.data[j].quant;
+            pID = items.data[j]._id;
+          }
         }
-      }
-      count = parseInt(req.session.cart[i].pquant);
-      temp("#itemContainer").append(`
+        count = parseInt(req.session.cart[i].pquant);
+        temp("#itemContainer").append(`
         <div class="row mb-4 d-flex justify-content-between align-items-center" id="parent${pID}">
         <hr class="my-4">
                         <div class="col-md-2 col-lg-2 col-xl-2">
@@ -509,9 +517,9 @@ app.get('/cart', async (req, res) => {
                         <hr class="my-4"></hr>
                       </div>
       `);
-      grandTotal += (count * price);
-    }
-    temp("#total").append(`
+        grandTotal += (count * price);
+      }
+      temp("#total").append(`
       <div class="d-flex justify-content-between mb-4">
         <h5 class="text-uppercase" id="grandCount">items : ${req.session.count}</h5>
       </div>
@@ -523,7 +531,9 @@ app.get('/cart', async (req, res) => {
         <h5 id="grandTotal">Rs. ${grandTotal}.00</h5>
       </div>
     `);
-    res.send(temp.html());
+      temp("body").append(`<script src="https://checkout.razorpay.com/v1/checkout.js"></script>`);
+      res.send(temp.html());
+    }
   } else {
     res.redirect("/login");
   }
@@ -570,6 +580,75 @@ app.post('/save_cart', jsonencodeParser, async (req, res) => {
   }
   else
     res.send({ "response": 400 });
+});
+
+app.post('/create/orderId', jsonencodeParser, (req, res) => {
+  let options = {
+    amount: req.body.amount,  // amount in the smallest currency unit
+    currency: "INR",
+    receipt: "rcp1"
+  };
+  instance.orders.create(options, function (err, order) {
+    res.send({ orderId: order.id });
+  });
+});
+
+app.post("/api/payment/verify", jsonencodeParser, (req, res) => {
+
+  let body = req.body.response.razorpay_order_id + "|" + req.body.response.razorpay_payment_id;
+
+  var crypto = require("crypto");
+  var expectedSignature = crypto.createHmac('sha256', 'QGxuLXAlK7KpGXqKWb0Rp79U')
+    .update(body.toString())
+    .digest('hex');
+  var response = { "signatureIsValid": "false" }
+  if (expectedSignature === req.body.response.razorpay_signature)
+    response = { "signatureIsValid": "true" }
+  res.send(response);
+});
+
+app.post('/payment_success', jsonencodeParser, async (req, res) => {
+  if (req.session.authenticated) {
+    if (req.body["payment"] === "success") {
+      try {
+        let remove = await mdb.addCart([], req.session.email);
+        if (remove === 1) {
+          let obj = {
+            "orderID": req.body["orderID"],
+            "name": req.session.name,
+            "email": req.session.email,
+            "orderDetails": req.session.cart
+          }
+          let flag = await mdb.addOrder(obj);
+          if (flag === 1) {
+            req.session.cart = [];
+            req.session.count = 0;
+            res.send({ "response": "Success" });
+          }
+          else {
+            res.status(400);
+            res.send({ "response": "Bad Request" });
+          }
+        }
+        else {
+          res.status(400);
+          res.send({ "response": "Bad Request" });
+        }
+      }
+      catch (e) {
+        res.status(400);
+        res.send({ "response": "Bad Request" });
+      }
+    }
+    else {
+      res.status(400);
+      res.send({ "response": "Bad Request" });
+    }
+  }
+  else {
+    res.status(400);
+    res.send({ "response": "Bad Request" });
+  }
 });
 
 app.listen(3000, () => {

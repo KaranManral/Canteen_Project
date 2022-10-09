@@ -152,4 +152,26 @@ const checkCart = async (ob) => {
     return retData;
 }
 
-module.exports = { addUser, checkUser, submitFeedback, getItems, addCart, checkCart };
+const addOrder = async (obj) => {
+    let flag = null;
+    await Promise.resolve(client.connect().then(async (db) => {
+        const collection = client.db("CanteenProject").collection("orders");
+
+        await Promise.resolve(collection.insertOne({
+            _id: obj["orderID"],
+            "email": obj["email"],
+            "name": obj["name"],
+            "order": obj["orderDetails"]
+        }).then(() => {
+            client.close();
+            flag = 1;
+        }).catch((err) => {
+            client.close();
+            flag = 0;
+        }));
+    }).catch((err) => {
+        flag = null;
+    }));
+    return flag;
+}
+module.exports = { addUser, checkUser, submitFeedback, getItems, addCart, checkCart, addOrder };
