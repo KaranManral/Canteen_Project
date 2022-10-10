@@ -56,7 +56,13 @@ app.get('/', (req, res) => {
 });
 
 app.get('/menu', async (req, res) => {
-  let items = await mdb.getItems();
+  let items;
+  if (req.session.itemList === null || req.session.itemList === undefined) {
+    items = await mdb.getItems();
+    req.session.itemList = items
+  }
+  else
+    items = req.session.itemList;
   if (items.flag === 1) {
     if (req.session.authenticated) {
       let temporaryHead = cheerio.load(retHead);

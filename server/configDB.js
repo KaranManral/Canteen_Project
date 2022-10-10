@@ -156,12 +156,14 @@ const addOrder = async (obj) => {
     let flag = null;
     await Promise.resolve(client.connect().then(async (db) => {
         const collection = client.db("CanteenProject").collection("orders");
-
+        const d = new Date();
+        let date = d.toLocaleDateString() + " " + d.toLocaleTimeString();
         await Promise.resolve(collection.insertOne({
             _id: obj["orderID"],
             "email": obj["email"],
             "name": obj["name"],
-            "order": obj["orderDetails"]
+            "order": obj["orderDetails"],
+            "order_time": date
         }).then(() => {
             client.close();
             flag = 1;
