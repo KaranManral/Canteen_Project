@@ -49,7 +49,7 @@ window.addEventListener("load", () => {
                             setTimeout(() => {
                                 window.location.href = "/";
                             }, 1000);
-                        }, 1000);
+                        }, 500);
                     }
                     else {
                         setTimeout(() => {
@@ -58,7 +58,7 @@ window.addEventListener("load", () => {
                             setTimeout(() => {
                                 window.location.reload();
                             }, 1000);
-                        }, 1000);
+                        }, 500);
                     }
                 },
                 error: function (jqXHR, textStatus, err) {

@@ -101,6 +101,15 @@ function proceedPayment(e) {
 
         orderId = response.orderId;
 
+        $("#pageBody").replaceWith(`
+        <div class="text-center" id="spin" style="min-heigh:60vh">
+        <div class="spinner-border" role="status" style="width: 4rem;height: 4rem;">
+            <span class="sr-only"></span>
+        </div>
+        <br><br>
+        <h4 class="text-primary">Processing Payment</h4>
+    </div>`);
+
         let options = {
             "key": "rzp_test_q9fdWD6XW6gjOQ", // Enter the Key ID generated from the Dashboard
             "amount": grandTotal, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -110,7 +119,7 @@ function proceedPayment(e) {
             "image": "./assets/images/restaurant.png",
             "order_id": orderId, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
             "handler": function (response) {
-                $("#pageBody").replaceWith(`
+                $("#spin").replaceWith(`
                     <div class="text-center" id="tick">
                     <h1 class="display-1"><i class="bi bi-patch-check-fill text-success"></i></h1>
                     <br><br>
@@ -143,7 +152,7 @@ function proceedPayment(e) {
                     }).done(function (response) {
                         setTimeout(() => {
                             window.location.href = "/";
-                        }, 2000);
+                        }, 5000);
                     }).fail(function (response) {
                         $("#pageBody").replaceWith(`
             <div class="text-center" id="cross">
