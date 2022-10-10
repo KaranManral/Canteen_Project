@@ -32,8 +32,5 @@
   "bugs": {
     "url": "https://github.com/KaranManral/Canteen_Project/issues"
   },
-  "homepage": "https://github.com/KaranManral/Canteen_Project#readme",
-  "devDependencies": {
-    "nodemon": "^2.0.20"
-  }
+  "homepage": "https://github.com/KaranManral/Canteen_Project#readme"
 }
