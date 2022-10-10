@@ -11,7 +11,7 @@ var instance = new Razorpay({
   key_id: 'rzp_test_q9fdWD6XW6gjOQ',
   key_secret: 'QGxuLXAlK7KpGXqKWb0Rp79U',
 });
-
+const port = Process.env.PORT || 3000;
 let readData = "", retHead = "";
 
 app.use('/', express.static(path.join(__dirname, "../client")));
@@ -657,6 +657,6 @@ app.post('/payment_success', jsonencodeParser, async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
+app.listen(port, () => {
   // console.log(`Example app listening at http://localhost:${process.env.PORT || 3000}`);
 });
