@@ -32,5 +32,8 @@
   "bugs": {
     "url": "https://github.com/KaranManral/Canteen_Project/issues"
   },
+  "engines": {
+    "node": "14.x"
+  },
   "homepage": "https://github.com/KaranManral/Canteen_Project#readme"
 }
