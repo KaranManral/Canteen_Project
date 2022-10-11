@@ -11,7 +11,7 @@ var instance = new Razorpay({
   key_id: 'rzp_test_q9fdWD6XW6gjOQ',
   key_secret: 'QGxuLXAlK7KpGXqKWb0Rp79U',
 });
-const port = Process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 let readData = "", retHead = "";
 
 app.use('/', express.static(path.join(__dirname, "../client")));
